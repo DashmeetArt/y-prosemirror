@@ -713,13 +713,15 @@ export const createNodeFromYElement = (
       .forEach(createChildren)
   }
   try {
-    const attrs = el.getAttributes(snapshot)
+    let attrs = {}
     if (snapshot !== undefined) {
       if (!isVisible(/** @type {Y.Item} */ (el._item), snapshot)) {
+        attrs = el.getAttributes(prevSnapshot) // attributes from previous snapshot so that we can show the removed items
         attrs.ychange = computeYChange
           ? computeYChange('removed', /** @type {Y.Item} */ (el._item).id)
           : { type: 'removed' }
       } else if (!isVisible(/** @type {Y.Item} */ (el._item), prevSnapshot)) {
+        attrs = el.getAttributes(snapshot) // attributes from latest snapshot so that we can show the added items
         attrs.ychange = computeYChange
           ? computeYChange('added', /** @type {Y.Item} */ (el._item).id)
           : { type: 'added' }
