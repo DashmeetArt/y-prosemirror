@@ -727,9 +727,9 @@ export const createNodeFromYElement = (
         attrs.ychange = computeYChange
           ? computeYChange('added', /** @type {Y.Item} */ (el._item).id)
           : { type: 'added' }
+      } else {
+        attrs.attrs = oldAttrs
       }
-    } else {
-      attrs.attrs = oldAttrs
     }
     const node = schema.node(el.nodeName, attrs, children)
     mapping.set(el, node)
